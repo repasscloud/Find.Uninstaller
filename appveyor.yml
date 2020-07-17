@@ -13,7 +13,7 @@ environment:
   NUGET_API_KEY:
     secure: vwJBhbWY9NwSAeYw7iU4i3RjqfVkegrXFyFAJB/uFIYtp5pz0Vw5Htiyfa83v+dg
   APPVEYOR_RDP_PASSWORD:
-    secure: secure: Ps2KNyw17/1mtAm9/5/miw==
+    secure: Ps2KNyw17/1mtAm9/5/miw==
 
 init:
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
