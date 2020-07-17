@@ -22,5 +22,8 @@ install:
 
 on_success:
   - ps: |
-      $buildInfo = Get-BuildInfo
-      $buildInfo.Version
+      Write-Host ${APPVEYOR_BUILD_ID}
+      Write-Host ${APPVEYOR_BUILD_NUMBER}
+      Write-Host ${APPVEYOR_BUILD_VERSION}
+#     $buildInfo = Get-BuildInfo
+#     $buildInfo.Version
