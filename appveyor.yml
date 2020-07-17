@@ -10,8 +10,13 @@ skip_commits:
   message: /updated? readme.*s/
 
 environment:
-  nugetapikey:
+  NUGET_API_KEY:
     secure: vwJBhbWY9NwSAeYw7iU4i3RjqfVkegrXFyFAJB/uFIYtp5pz0Vw5Htiyfa83v+dg
+  APPVEYOR_RDP_PASSWORD:
+    secure: secure: Ps2KNyw17/1mtAm9/5/miw==
+
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 build: false
 
@@ -25,5 +30,6 @@ on_success:
       Write-Host $env:APPVEYOR_BUILD_ID
       Write-Host $env:APPVEYOR_BUILD_NUMBER
       Write-Host $env:APPVEYOR_BUILD_VERSION
-#     $buildInfo = Get-BuildInfo
-#     $buildInfo.Version
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))

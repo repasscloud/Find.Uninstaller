@@ -53,8 +53,15 @@ function Get-UninstallString {
         [bool]$FullDetail=$false
     )
 
-    $Value = '*' + $Application + '*'
+    if ($Application -match '^\w.*$') { $Value = '*' + $Application + '*' } #~> no asterisk
+    elseif ($Application -match '^\*\w.*$') { $Value = $Application + '*' } #~> asterisk at start only
+    elseif ($Application -match '^\w.*\*$') { $Value = '*' + $Application } #~> asterisk at end only
+    elseif ($Application -match '^\*\w.*\*$') { $Value = $Application } #~> asterisk at start and end
+    else { $Value = '*' + $Application + '*' } #~> catch all backup
 
+    
+
+    
     switch ($FullDetail) {
         $true {
             $Path = @(
