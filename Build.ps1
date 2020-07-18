@@ -36,4 +36,40 @@ $ReleaseNotes=@"
 "@
 $FunctionsToExport=@('Get-UninstallString')
 
-New-ModuleManifest -Path "${PSScriptRoot}\Find.Uninstaller.psd1" -Author $Author -CompanyName $CompanyName -Copyright $Copyright -RootModule 'Find.Uninstaller.psm1' -ModuleVersion $env:APPVEYOR_BUILD_VERSION -Description $description -PowerShellVersion '5.1' -ProcessorArchitecture None -FileList $FileList -Tags $Tags -ProjectUri $ProjectUri -LicenseUri $LicenseUri -ReleaseNotes $ReleaseNotes -FunctionsToExport $FunctionsToExport
+if (-not($env:APPVEYOR_BUILD_VERSION)) {
+    $ModuleVersion='2.0.1'
+} else {
+    $ModuleVersion=$Env:APPVEYOR_BUILD_VERSION
+}
+
+New-ModuleManifest -Path "${PSScriptRoot}\Find.Uninstaller.psd1" `
+  -Author $Author `
+  -CompanyName $CompanyName `
+  -Copyright $Copyright `
+  -RootModule 'Find.Uninstaller.psm1' `
+  -ModuleVersion $ModuleVersion `
+  -Description $description `
+  -PowerShellVersion '5.1' `
+  -ProcessorArchitecture None `
+  -FileList $FileList `
+  -Tags $Tags `
+  -ProjectUri $ProjectUri `
+  -LicenseUri $LicenseUri `
+  -ReleaseNotes $ReleaseNotes `
+  -FunctionsToExport $FunctionsToExport
+
+
+if (-not($Env:APPVEYOR_BUILD_NUMBER)) {
+  $CurrentBuild=14
+} else {
+  $CurrentBuild=$Env:APPVEYOR_BUILD_NUMBER
+}
+$OldVersionString="  Version:        ${ModuleVersion}";
+$NewVersionString="  Version:        ${ModuleVersion}.{0}" -f $CurrentBuild
+Get-ChildItem -Path "$Env:APPVEYOR_BUILD_FOLDER\public" -Filter "*.ps1" | ForEach-Object {
+  $ManifestContent = Get-Content -Path $_.FullName -Raw;
+  $ManifestContent = $ManifestContent -replace $OldVersionString,$NewVersionString;
+  Set-Content -Path $_FullName -Value $ManifestContent;
+}
+  
+  

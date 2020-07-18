@@ -1,27 +1,44 @@
+# Build worker image (VM template)
 image: Visual Studio 2017
 
+# scripts that are called at very beginning, before repo cloningit:
+  - git config --global core.autocrlf input
+
+# clone directory
+clone_folder: c:\projects\Find.Installer
+
+# version format
 version: 2.0.1.{build}
 
+# branches to build
 branches:
+  # whitelist
   only:
     - master
+    - production
 
+  # blacklist
+  except:
+    - gh-pages
+
+# Skipping commits with particular message or from specific user
 skip_commits:
   message: /updated? readme.*s/
+#  author: John                                      # Commit author's username, name, email or regexp maching one of these.
 
+# environment variables
 environment:
   NUGET_API_KEY:
     secure: vwJBhbWY9NwSAeYw7iU4i3RjqfVkegrXFyFAJB/uFIYtp5pz0Vw5Htiyfa83v+dg
   APPVEYOR_RDP_PASSWORD:
     secure: Ps2KNyw17/1mtAm9/5/miw==
 
-#init:
-#  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
+# Build settings, not to be confused with "before_build" and "after_build".
 build: false
 
+# scripts that run after cloning repository
 install:
-  - ps: .\Build.ps1
+  - ps: .\build.ps1
   - ps: |
       Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
       Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
@@ -32,13 +49,20 @@ install:
       Set-Location -Path $fullpath
       Get-ChildItem -Path . 
       Pop-Location
+  - ps: .\Install-Module.ps1
+  - ps: .\deploy.ps1
 
+# on successful build
 on_success:
   - ps: |
       Write-Host $env:APPVEYOR_BUILD_ID
       Write-Host $env:APPVEYOR_BUILD_NUMBER
       Write-Host $env:APPVEYOR_BUILD_VERSION
-      
 
+# on build failure
+on_failure:
+  - ps: Write-Host -ForegroundColor Red 'Build failed :-('
+
+# after build failure or success
 on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))

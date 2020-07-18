@@ -19,7 +19,7 @@
   UninstallString object.
 
 .NOTES
-  Version:        2.0.1.12
+  Version:        2.0.1
   Author:         Copyright © 2020 RePass Cloud Pty Ltd (https://repasscloud.com/). All rights reserved.
   License:        Apache-2.0
   Creation Date:  2020-07-17
@@ -77,4 +77,3 @@ function Get-UninstallString {
         }
     }
 }
-Export-ModuleMember -Function Get-UninstallString

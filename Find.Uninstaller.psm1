@@ -8,5 +8,5 @@ try { [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
 catch { Write-Warning -Message $Strings.SystemDrawingAvailable }
 
 foreach ($directory in @('Private', 'Public')) {
-    Get-ChildItem -Path "${PSScriptRoot}\{$directory}" -Filter "*.ps1" -Recurse | ForEach-Object { . $_.FullName }
+    Get-ChildItem -Path "${PSScriptRoot}\{$directory}" -Filter "*.ps1" | ForEach-Object { . $_.FullName }
 }
