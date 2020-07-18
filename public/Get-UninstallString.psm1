@@ -1,6 +1,4 @@
-﻿
-function Get-UninstallString {
-<#
+﻿<#
 .SYNOPSIS
   Returns Uninstall String for installed applications.
 
@@ -21,11 +19,10 @@ function Get-UninstallString {
   UninstallString object.
 
 .NOTES
-  Version:        1.0.0.10
+  Version:        2.0.1.11
   Author:         Copyright © 2020 RePass Cloud Pty Ltd (https://repasscloud.com/). All rights reserved.
   License:        Apache-2.0
   Creation Date:  2020-07-17
-  Purpose/Change: Conversion to PowerShell Module.
   
 .EXAMPLE
   Get-UninstallString -Application Firefox
@@ -34,6 +31,7 @@ function Get-UninstallString {
   Get-UninstallString -Application Firefox -FullDetail $true
 
 #>
+function Get-UninstallString {
     param(
         [Parameter(Mandatory=$true,
             ValueFromPipeline=$true,
@@ -58,9 +56,6 @@ function Get-UninstallString {
     elseif ($Application -match '^\w.*\*$') { $Value = '*' + $Application } #~> asterisk at end only
     elseif ($Application -match '^\*\w.*\*$') { $Value = $Application } #~> asterisk at start and end
     else { $Value = '*' + $Application + '*' } #~> catch all backup
-
-    
-
     
     switch ($FullDetail) {
         $true {
@@ -82,3 +77,4 @@ function Get-UninstallString {
         }
     }
 }
+Export-ModuleMember -Function Get-UninstallString

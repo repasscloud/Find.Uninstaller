@@ -1,6 +1,6 @@
 image: Visual Studio 2017
 
-version: 1.0.0.{build}
+version: 2.0.1.{build}
 
 branches:
   only:
@@ -24,13 +24,20 @@ install:
   - ps: |
       Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
       Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+  - ps: .\Install-Module.ps1
+  - ps: |
+      $fullpath = $env:PSModulePath -split ":(?!\\)|;|," | Where-Object {$_ -notlike ([System.Environment]::GetFolderPath("UserProfile")+"*") -and $_ -notlike "$pshome*"} | Select-Object -First 1
+      Push-Location
+      Set-Location -Path $fullpath
+      Get-ChildItem -Path . 
+      Pop-Location
 
 on_success:
   - ps: |
       Write-Host $env:APPVEYOR_BUILD_ID
       Write-Host $env:APPVEYOR_BUILD_NUMBER
       Write-Host $env:APPVEYOR_BUILD_VERSION
-      pwd
+      
 
 on_finish:
   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
