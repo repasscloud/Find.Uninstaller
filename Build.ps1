@@ -36,4 +36,4 @@ $ReleaseNotes=@"
 "@
 $FunctionsToExport=@('Get-UninstallString')
 
-New-ModuleManifest -Path "${PSScriptRoot}\Find.Uninstaller.psd1" -Author $Author -CompanyName $CompanyName -Copyright $Copyright -RootModule 'Find.Uninstaller.psm1' -ModuleVersion '2.0.0.0' -Description $description -PowerShellVersion '5.1' -ProcessorArchitecture None -FileList $FileList -Tags $Tags -ProjectUri $ProjectUri -LicenseUri $LicenseUri -ReleaseNotes $ReleaseNotes -FunctionsToExport $FunctionsToExport
+New-ModuleManifest -Path "${PSScriptRoot}\Find.Uninstaller.psd1" -Author $Author -CompanyName $CompanyName -Copyright $Copyright -RootModule 'Find.Uninstaller.psm1' -ModuleVersion $env:APPVEYOR_BUILD_VERSION -Description $description -PowerShellVersion '5.1' -ProcessorArchitecture None -FileList $FileList -Tags $Tags -ProjectUri $ProjectUri -LicenseUri $LicenseUri -ReleaseNotes $ReleaseNotes -FunctionsToExport $FunctionsToExport
