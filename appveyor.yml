@@ -53,9 +53,18 @@ on_success:
       Write-Host "Build Version: " -ForegroundColor Yellow -NoNewLine
       Write-Host $env:APPVEYOR_BUILD_VERSION
   - ps: |
+      Write-Host -ForegroundColor Green 'Importing Module: ' -NoNewLine
+      Write-Host "Find.Uninstaller"
       Import-Module -Name Find.Uninstaller
+  - ps: |
+      Write-Host "Running commmand: Get-UninstallString -Application Zip -FullDetail"
       Get-UninstallString -Application Zip -FullDetail
+  - ps: |
+      Write-Host "Running command: Get-UninstallString -Application zip"
       Get-UninstallString -Application zip
+  - ps: |
+      Write-Host "Running command: Get-UninstallString -Application zip | Select-Object *"
+      Get-UninstallString -Application zip | Select-Object *
 
 # on build failure
 on_failure:
