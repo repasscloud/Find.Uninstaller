@@ -69,7 +69,7 @@ $NewVersionString="  Version:        ${ModuleVersion}.{0}" -f $CurrentBuild
 Get-ChildItem -Path "$Env:APPVEYOR_BUILD_FOLDER\public" -Filter "*.ps1" | ForEach-Object {
   $ManifestContent = Get-Content -Path $_.FullName -Raw;
   $ManifestContent = $ManifestContent -replace $OldVersionString,$NewVersionString;
-  Set-Content -Path $_FullName -Value $ManifestContent;
+  Set-Content -Path $_.FullName -Value $ManifestContent;
 }
   
   
