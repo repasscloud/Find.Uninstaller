@@ -28,7 +28,7 @@
   Get-UninstallString -Application Firefox
 
 .EXAMPLE
-  Get-UninstallString -Application Firefox -FullDetail $true
+  Get-UninstallString -Application Firefox -FullDetail
 
 #>
 function Get-UninstallString {
@@ -57,23 +57,21 @@ function Get-UninstallString {
     elseif ($Application -match '^\*\w.*\*$') { $Value = $Application } #~> asterisk at start and end
     else { $Value = '*' + $Application + '*' } #~> catch all backup
     
-    switch ($FullDetail) {
-        $true {
-            $Path = @(
-                'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall',
-                'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
-            )
-            [String]$returnObj = Get-ChildItem -Path $Path | Get-ItemProperty | Where-Object {$_.DisplayName -like "${Value}" } | Select-Object -Property *
-            return $returnObj.UninstallString5
-        }
-        Default {
-            $Path = @(
-                'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall',
-                'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
-            )
-            $returnObj = Get-ChildItem -Path $Path | Get-ItemProperty | Where-Object {$_.DisplayName -like "${Value}" } | Select-Object -Property UninstallString
-            $returnObj.GetType()
-            return $returnObj
-        }
+    if ($FullDetail) {
+        $Path = @(
+            'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall',
+            'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
+        )
+        [String]$returnObj = Get-ChildItem -Path $Path | Get-ItemProperty | Where-Object {$_.DisplayName -like "${Value}" } | Select-Object -Property *
+        return $returnObj.UninstallString5
+    }
+    else {
+        $Path = @(
+            'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall',
+            'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
+        )
+        $returnObj = Get-ChildItem -Path $Path | Get-ItemProperty | Where-Object {$_.DisplayName -like "${Value}" } | Select-Object -Property UninstallString
+        $returnObj.GetType()
+        return $returnObj
     }
 }
