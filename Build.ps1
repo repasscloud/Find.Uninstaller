@@ -1,4 +1,4 @@
-$description = @"
+$Description = @"
 PowerShell module to get the uninstall string of any installed application.
 
 Use of the wildcard "*" character is not necessary when searching for items, and will be applied automatically to the search index.
@@ -48,7 +48,7 @@ New-ModuleManifest -Path "${PSScriptRoot}\Find.Uninstaller.psd1" `
   -Copyright $Copyright `
   -RootModule 'Find.Uninstaller.psm1' `
   -ModuleVersion $ModuleVersion `
-  -Description $description `
+  -Description $Description `
   -PowerShellVersion '5.1' `
   -ProcessorArchitecture None `
   -FileList $FileList `
@@ -60,11 +60,11 @@ New-ModuleManifest -Path "${PSScriptRoot}\Find.Uninstaller.psd1" `
 
 
 if (-not($Env:APPVEYOR_BUILD_NUMBER)) {
-  $CurrentBuild=14
+  $CurrentBuild=18
 } else {
   $CurrentBuild=$Env:APPVEYOR_BUILD_NUMBER
 }
-$OldVersionString="  Version:        ${ModuleVersion}";
+$OldVersionString='  Version:';
 $NewVersionString="  Version:        ${ModuleVersion}.{0}" -f $CurrentBuild
 Get-ChildItem -Path "$Env:APPVEYOR_BUILD_FOLDER\public" -Filter "*.ps1" | ForEach-Object {
   $ManifestContent = Get-Content -Path $_.FullName -Raw;
