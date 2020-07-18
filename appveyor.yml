@@ -2,6 +2,7 @@
 image: Visual Studio 2017
 
 # scripts that are called at very beginning, before repo cloningit:
+init:
   - git config --global core.autocrlf input
 
 # clone directory
