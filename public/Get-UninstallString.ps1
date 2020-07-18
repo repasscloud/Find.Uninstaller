@@ -48,7 +48,7 @@ function Get-UninstallString {
             Position=1)]
         [ValidateSet($false,$true)]
         [Alias('Detail')]
-        [bool]$FullDetail=$false
+        [switch]$FullDetail
     )
 
     if ($Application -match '^\w.*$') { $Value = '*' + $Application + '*' } #~> no asterisk
