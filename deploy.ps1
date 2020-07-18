@@ -6,7 +6,7 @@
 	This PowerShell script is invoked by AppVeyor after the "Deploy" phase has completed successfully.
 #>
 
-function Patch-ModuleManifest {
+function Invoke-PatchModuleManifest {
 	[CmdletBinding()]
 	param (
 		[string] $Path,
@@ -44,7 +44,7 @@ function Main {
 	Write-Verbose -Message 'Calling Find-Package command to download nuget-anycpu.exe'
 	Find-Package -ForceBootstrap -Name zzzzzz -ErrorAction Ignore;
 
-	Patch-ModuleManifest -Path $Env:APPVEYOR_BUILD_FOLDER\Find.Uninstaller.psd1 -BuildNumber $Env:APPVEYOR_BUILD_NUMBER;
+	Invoke-PatchModuleManifest -Path $Env:APPVEYOR_BUILD_FOLDER\Find.Uninstaller.psd1 -BuildNumber $Env:APPVEYOR_BUILD_NUMBER;
 
 	Write-Verbose -Message ('Publishing module {0} to Gallery!' -f $Env:APPVEYOR_BUILD_FOLDER);
 	#Publish-Module -Path $Env:APPVEYOR_BUILD_FOLDER -NuGetApiKey $Env:psapikey;
