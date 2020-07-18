@@ -54,7 +54,7 @@ on_success:
       Write-Host $env:APPVEYOR_BUILD_VERSION
   - ps: |
       Import-Module -Name Find.Uninstaller
-      Get-UninstallString -Application 7
+      Get-UninstallString -Application 7-Zip -FullDetail
 
 # on build failure
 on_failure:
