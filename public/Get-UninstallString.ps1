@@ -42,11 +42,8 @@ function Get-UninstallString {
         [String]$Application,
 
         [Parameter(Mandatory=$false,
-            ValueFromPipeline=$true,
-            ValueFromPipelineByPropertyName=$true,
             HelpMessage='Return all properties of application matching Application name.',
             Position=1)]
-        [ValidateSet($false,$true)]
         [Alias('Detail')]
         [switch]$FullDetail
     )
