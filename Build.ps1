@@ -36,11 +36,8 @@ $ReleaseNotes=@"
 "@
 $FunctionsToExport=@('Get-UninstallString')
 
-if (-not($env:APPVEYOR_BUILD_VERSION)) {
-    $ModuleVersion='2.0.1'
-} else {
-    $ModuleVersion=$Env:APPVEYOR_BUILD_VERSION
-}
+
+$ModuleVersion='2.0.2'
 
 New-ModuleManifest -Path "${PSScriptRoot}\Find.Uninstaller.psd1" `
   -Author $Author `
@@ -59,17 +56,17 @@ New-ModuleManifest -Path "${PSScriptRoot}\Find.Uninstaller.psd1" `
   -FunctionsToExport $FunctionsToExport
 
 
-if (-not($Env:APPVEYOR_BUILD_NUMBER)) {
-  $CurrentBuild=18
-} else {
-  $CurrentBuild=$Env:APPVEYOR_BUILD_NUMBER
+if ($Env:APPVEYOR_BUILD_NUMBER) {
+    $CurrentBuild=$Env:APPVEYOR_BUILD_NUMBER
 }
+
+# Update the PS Scripts with the version and build
 $OldVersionString='  Version:';
-$NewVersionString="  Version:        ${ModuleVersion}.{0}" -f $CurrentBuild
+$NewVersionString="  Version:        2.0.2.{0}" -f $CurrentBuild
 Get-ChildItem -Path "$Env:APPVEYOR_BUILD_FOLDER\public" -Filter "*.ps1" | ForEach-Object {
-  $ManifestContent = Get-Content -Path $_.FullName -Raw;
-  $ManifestContent = $ManifestContent -replace $OldVersionString,$NewVersionString;
-  Set-Content -Path $_.FullName -Value $ManifestContent;
+    $ManifestContent = Get-Content -Path $_.FullName -Raw;
+    $ManifestContent = $ManifestContent -replace $OldVersionString,$NewVersionString;
+    Set-Content -Path $_.FullName -Value $ManifestContent;
 }
   
   
