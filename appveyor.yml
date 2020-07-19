@@ -16,7 +16,6 @@ branches:
   # whitelist
   only:
     - master
-    - production
 
   # blacklist
   except:
@@ -33,6 +32,7 @@ environment:
     secure: vwJBhbWY9NwSAeYw7iU4i3RjqfVkegrXFyFAJB/uFIYtp5pz0Vw5Htiyfa83v+dg
   APPVEYOR_RDP_PASSWORD:
     secure: Ps2KNyw17/1mtAm9/5/miw==
+
 
 # Build settings, not to be confused with "before_build" and "after_build".
 build: false
@@ -57,10 +57,12 @@ on_success:
       Write-Host "Find.Uninstaller"
       Import-Module -Name Find.Uninstaller
   - ps: |
-      Write-Host "Running commmand: Get-UninstallString -Application Zip -FullDetail"
+      Write-Host -ForegroundColor Green 'Running commmand: ' -NoNewLine
+      Write-Host 'Get-UninstallString -Application Zip -FullDetail'
       Get-UninstallString -Application Zip -FullDetail
   - ps: |
-      Write-Host "Running command: Get-UninstallString -Application zip"
+      Write-Host -ForegroundColor Green 'Running commmand: ' -NoNewLine
+      Write-Host 'Get-UninstallString -Application zip'
       Get-UninstallString -Application zip
   - ps: |
       Write-Host "Running command: Get-UninstallString -Application zip | Select-Object *"

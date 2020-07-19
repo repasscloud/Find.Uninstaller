@@ -47,7 +47,7 @@ function Main {
 	Invoke-PatchModuleManifest -Path $Env:APPVEYOR_BUILD_FOLDER\Find.Uninstaller.psd1 -BuildNumber $Env:APPVEYOR_BUILD_NUMBER;
 
 	Write-Verbose -Message ('Publishing module {0} to Gallery!' -f $Env:APPVEYOR_BUILD_FOLDER);
-	#Publish-Module -Path $Env:APPVEYOR_BUILD_FOLDER -NuGetApiKey $Env:psapikey;
+	Publish-Module -Path $Env:APPVEYOR_BUILD_FOLDER -NuGetApiKey $Env:NUGET_API_KEY;
 	Write-Verbose -Message 'Finished publishing module!'
 }
 
