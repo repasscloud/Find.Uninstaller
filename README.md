@@ -1,5 +1,6 @@
 #Find.Uninstaller
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d39f2d8f460f4f81802e246c7a471e01)](https://app.codacy.com/gh/repasscloud/Find.Uninstaller?utm_source=github.com&utm_medium=referral&utm_content=repasscloud/Find.Uninstaller&utm_campaign=Badge_Grade_Dashboard)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/947571116b1d49da90fe1a008dd33f35)](https://www.codacy.com/gh/repasscloud/Find.Uninstaller?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=repasscloud/Find.Uninstaller&amp;utm_campaign=Badge_Grade) [![Build status](https://ci.appveyor.com/api/projects/status/kgr9nq2f82c2r5ys/branch/master?svg=true)](https://ci.appveyor.com/project/danijeljw/find-uninstaller/branch/master)
 
 Quickly find the uninstall string of an application without leaving the terminal or using lengthy commands.
