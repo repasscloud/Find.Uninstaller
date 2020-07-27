@@ -14,7 +14,6 @@ Example 3 - Find application by partial name:
 "@
 
 $FileList=@(
-    '.\private',
     '.\public',
     '.\LICENSE',
     '.\README.md',
