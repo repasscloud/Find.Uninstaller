@@ -14,5 +14,5 @@ Install-Module Find.Uninstaller
 
 | Name | Synopsis |
 | :-- | :-- |
-| `Get-UninstallString -Application <appName>` | Retrieves an uninstall for <appName> |
-| `Get-UninstallString -Application <appName> -FullDetail $true` | Retrieves all infomrmation for <appName> |
+| `Get-UninstallString -Application <appName>` | Retrieves an uninstall for \<appName\> |
+| `Get-UninstallString -Application <appName> -FullDetail $true` | Retrieves all infomrmation for \<appName\> |
