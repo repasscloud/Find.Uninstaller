@@ -7,5 +7,5 @@ if (-not $fullPath) {
             $fullPath = Join-Path $fullPath -ChildPath "Find.Uninstaller"
 }
 Push-location $PSScriptRoot
-Robocopy . $fullPath /mir /XD .devbots .github .git CI /XF appveyor.yml .gitkeep .gitignore InstallModule.ps1 CODE-OF-CONDUCT.md CONTRIBUTING.md
+Robocopy . $fullPath /mir /XD .git .devbots .github CI Tests bin lib Private /XF .gitignore appveyor.yml build.ps1 deploy.ps1 install.ps1 test.ps1 CODE-OF-CONDUCT.md CONTRIBUTING.md
 Pop-Location

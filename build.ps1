@@ -1,3 +1,8 @@
+$PSD1=$PSScriptRoot+'\Find.Uninstaller.psd1'
+if (Test-Path -Path $PSD1) {
+    Remove-Item -Path $PSD1 -Confirm:$false -Force
+}
+
 $Description = @"
 PowerShell module to get the uninstall string of any installed application.
 
@@ -14,12 +19,10 @@ Example 3 - Find application by partial name:
 "@
 
 $FileList=@(
-    '.\private',
     '.\public',
     '.\LICENSE',
     '.\README.md',
     '.\Find.Uninstaller.psm1',
-    '.\Find.Uninstaller.psd1',
     '.\CHANGELOG.md'
 )
 
@@ -36,10 +39,11 @@ $ReleaseNotes=@"
 "@
 $FunctionsToExport=@('Get-UninstallString')
 
+$HelpInfoURI='https://raw.githubusercontent.com/repasscloud/Find.Uninstaller/master/README.md'
 
-$ModuleVersion='2.0.2'
+$ModuleVersion=$Env:APPVEYOR_BUILD_VERSION
 
-New-ModuleManifest -Path "${PSScriptRoot}\Find.Uninstaller.psd1" `
+New-ModuleManifest -Path $PSD1 `
   -Author $Author `
   -CompanyName $CompanyName `
   -Copyright $Copyright `
@@ -53,8 +57,8 @@ New-ModuleManifest -Path "${PSScriptRoot}\Find.Uninstaller.psd1" `
   -ProjectUri $ProjectUri `
   -LicenseUri $LicenseUri `
   -ReleaseNotes $ReleaseNotes `
-  -FunctionsToExport $FunctionsToExport
-
+  -FunctionsToExport $FunctionsToExport `
+  -HelpInfoUri $HelpInfoURI
 
 if ($Env:APPVEYOR_BUILD_NUMBER) {
     $CurrentBuild=$Env:APPVEYOR_BUILD_NUMBER
@@ -62,11 +66,12 @@ if ($Env:APPVEYOR_BUILD_NUMBER) {
 
 # Update the PS Scripts with the version and build
 $OldVersionString='  Version:';
-$NewVersionString="  Version:        2.0.2.{0}" -f $CurrentBuild
+$NewVersionString="  Version:        1.0.1.{0}" -f $CurrentBuild
+$LastUpdated='  Last Updated:';
+$LatestUpdated="  Last Updated:   $((Get-Date).ToString('yyyy-MM-dd'))";
 Get-ChildItem -Path "$Env:APPVEYOR_BUILD_FOLDER\public" -Filter "*.ps1" | ForEach-Object {
     $ManifestContent = Get-Content -Path $_.FullName -Raw;
     $ManifestContent = $ManifestContent -replace $OldVersionString,$NewVersionString;
-    Set-Content -Path $_.FullName -Value $ManifestContent;
+    $ManifestContent = $ManifestContent -replace $LastUpdated,$LatestUpdated;
+    Set-Content -Path $_.FullName -Value $ManifestContent -Force;
 }
-  
-  
